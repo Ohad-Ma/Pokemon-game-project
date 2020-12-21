@@ -304,6 +304,7 @@ public class MyFrame extends JFrame {
 					}
 					else {
 						Ex2.setGameLevel(Integer.parseInt(level));
+						Ex2.setLogin_id(Integer.parseInt(id));
 						Ex2.client.start();
 						this.setVisible(false);
 						panel.setVisible(false);

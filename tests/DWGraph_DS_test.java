@@ -1,9 +1,7 @@
-package Tests;
-
 import api.directed_weighted_graph;
 import api.node_data;
-import api.DWGraph_DS;
-import api.NodeData;
+import gameClient.DWGraph_DS;
+import gameClient.NodeData;
 import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.Collections;

@@ -1,9 +1,8 @@
-package gameClient;
-
-import api.DWGraph_DS;
-import api.NodeData;
 import api.directed_weighted_graph;
 import api.node_data;
+import gameClient.CL_Agent;
+import gameClient.DWGraph_DS;
+import gameClient.NodeData;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

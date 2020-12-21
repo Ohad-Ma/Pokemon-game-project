@@ -1,8 +1,7 @@
-package gameClient;
-
 import api.*;
 import gameClient.CL_Pokemon;
 import gameClient.DWGraph_Algo;
+import gameClient.DWGraph_DS;
 import gameClient.util.Point3D;
 import org.junit.jupiter.api.Test;
 

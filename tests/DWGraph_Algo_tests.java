@@ -1,7 +1,11 @@
-package Tests;
+import org.junit.Test;
 
+
+import gameClient.DWGraph_Algo;
+import gameClient.DWGraph_DS;
+import gameClient.NodeData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+
 
 import java.util.*;
 

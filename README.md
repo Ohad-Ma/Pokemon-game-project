@@ -2,7 +2,7 @@
 
 
 ## About
-This project represents a game which based on an **directed weighted graph** with various methods and Dijkstra's 
+This project is a part of OOP Course and represents a game which based on an **directed weighted graph** with various methods and Dijkstra's 
 the shortest path algorithm.  
 Methods such as : 
 - _Add\remove a vertex on the graph._ 

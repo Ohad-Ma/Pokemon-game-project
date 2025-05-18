@@ -4,137 +4,95 @@ import api.edge_data;
 
 /**
  * This class represents an Edge object on a directed weighted graph
- * which implemented by given edge_data api.
- * Contains functions that help us define an Edge on a weighted directed graph such as: setWeight,setTag
- * and many getters/setters.
+ * which implements the given edge_data API.
+ * It provides methods to define and interact with an edge, including setting/getting weight, tag, and info.
  */
 public class EdgeData implements edge_data {
-	private int src; //source vertex
-	private int dest; //destination vertex
-	private double w; //weight of each edge
-	private int tag; //tag of each edge, will help later with the algorithm
-	private String info; //info of each edge
+    private int src;       // Source node
+    private int dest;      // Destination node
+    private double w;      // Edge weight
+    private int tag;       // Tag for algorithm use
+    private String info;   // Metadata information
 
-	//Constructors--
-	public EdgeData(){
-		this.src = 0;
-		this.dest = 0;
-		this.w = 0;
-		this.info = "";
-		this.tag = 0;
-	}
-	public EdgeData(int s, int d, double w, String i, int t) {
-		this.src = s;
-		this.dest = d;
-		this.w = w;
-		this.info = i;
-		this.tag = t;
-	}
+    // Constructors
+    public EdgeData() {
+        this(0, 0, 0, "", 0);
+    }
 
-	public EdgeData(int src, int dst, double w) {
-		this(src, dst, w, "", 0);
-	}
+    public EdgeData(int s, int d, double w, String i, int t) {
+        this.src = s;
+        this.dest = d;
+        this.w = w;
+        this.info = i;
+        this.tag = t;
+    }
 
-	public EdgeData(EdgeData other) {
-		this(other.src, other.dest, other.w, "", 0);
-	}
+    public EdgeData(int src, int dst, double w) {
+        this(src, dst, w, "", 0);
+    }
 
-	//-------------
+    public EdgeData(EdgeData other) {
+        this(other.src, other.dest, other.w, other.info, other.tag);
+    }
 
-	/**
-	 * Equality of addresses of gameClient.EdgeData objects
-	 * @param o
-	 * @return boolean
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof edge_data))
-			return false;
-		edge_data other = (edge_data) o;
-		return this.src == other.getSrc() && this.getDest() == other.getDest();
-	}
+    // API methods
+    @Override
+    public int getSrc() {
+        return this.src;
+    }
 
-	/**
-	 * Prevents collisions on the hashmap of outer class gameClient.DWGraph_DS
-	 * @return int
-	 */
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 31 * hash + this.src;
-		hash = 31 * hash + this.dest;
-		hash = 31 * hash + this.dest;
-		return hash;
-	}
+    @Override
+    public int getDest() {
+        return this.dest;
+    }
 
-	/**
-	 * The id of the source node of this edge.
-	 * @return int
-	 */
-	@Override
-	public int getSrc() {
-		return this.src;
-	}
+    @Override
+    public double getWeight() {
+        return this.w;
+    }
 
-	/**
-	 * The id of the destination node of this edge
-	 * @return int
-	 */
-	@Override
-	public int getDest() {
-		return this.dest;
-	}
+    @Override
+    public String getInfo() {
+        return this.info;
+    }
 
-	/**
-	 * @return the weight of this edge (positive value).
-	 */
-	@Override
-	public double getWeight() {
-		return this.w;
-	}
+    @Override
+    public void setInfo(String s) {
+        this.info = s;
+    }
 
-	/**
-	 * Returns the remark (meta data) associated with this edge.
-	 * @return String
-	 */
-	@Override
-	public String getInfo() {
-		return this.info;
-	}
+    @Override
+    public int getTag() {
+        return this.tag;
+    }
 
-	/**
-	 * Allows changing the remark (meta data) associated with this edge.
-	 * @param s
-	 */
-	@Override
-	public void setInfo(String s) {
-		this.info=s;
-	}
+    @Override
+    public void setTag(int t) {
+        this.tag = t;
+    }
 
-	/**
-	 * Temporal data (aka color: e,g, white, gray, black)
-	 * which can be used be algorithms
-	 * @return int
-	 */
-	@Override
-	public int getTag() {
-		return this.tag;
-	}
+    @Override
+    public String toString() {
+        return String.format("Edge[src=%d, dest=%d, weight=%.2f, tag=%d, info='%s']",
+                src, dest, w, tag, info);
+    }
 
-	/**
-	 * This method allows setting the "tag" value for temporal marking an edge - common
-	 * practice for marking by algorithms.
-	 * @param t - the new value of the tag
-	 */
-	@Override
-	public void setTag(int t) {
-		this.tag=t;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof edge_data)) return false;
+        edge_data other = (edge_data) o;
+        return this.src == other.getSrc() &&
+               this.dest == other.getDest() &&
+               Double.compare(this.w, other.getWeight()) == 0;
+    }
 
-	@Override
-	public String toString(){
-		return String.format("src:%d w:%f dest:%d", this.src,this.w,this.dest);
-	}
+    @Override
+    public int hashCode() {
+        int hash = 17;
+        hash = 31 * hash + src;
+        hash = 31 * hash + dest;
+        hash = 31 * hash + Double.hashCode(w);
+        return hash;
+    }
 }

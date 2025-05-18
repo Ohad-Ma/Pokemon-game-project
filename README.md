@@ -12,6 +12,7 @@ Methods such as :
 - _Find **the shortest path** and its **distance** between two vertices by using Dijkstra Algorithm._
 - _And much more..._
    (for further explanation of the classes and packages please check the wiki)
+  
 ## The game
 The game which being represented in this project played by Agents that walks over an **directed weighted graph**
 having a will to catch (or eat) many Pokémons as they can before the times runs out!

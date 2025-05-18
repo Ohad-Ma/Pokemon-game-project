@@ -4,147 +4,112 @@ import api.geo_location;
 import api.node_data;
 
 /**
- * This class represent a Vertex object on a graph which
- * implemented by given node_data api.
- * Contains functions that define a vertex on a directed weighted graph such as: setLocation and setWeight (which isn't used)
+ * This class represents a Vertex object in a graph, implementing the node_data API.
+ * It provides information and metadata used in graph algorithms and visualization.
  */
 public class NodeData implements node_data {
-	private int tag; //tag of each vertex - help with the algorithm
-	private String info; //info of each vertex
-	private int key; // key of each vertex
-	private geo_location pos; //geo_location of each node - coordinates x,y,z
+    private int tag;               // Useful for algorithms (e.g., color marking)
+    private String info;          // Optional metadata
+    private int key;              // Unique identifier for the node
+    private geo_location pos;     // Node's position in space
+    private double weight;        // Weight for algorithms (e.g., Dijkstra)
 
-	//Constructors
-	public NodeData() {
-		this.tag = 0;
-		this.setInfo("");
-		this.pos = null;
-	}
+    // Constructors
+    public NodeData() {
+        this.tag = 0;
+        this.info = "";
+        this.pos = null;
+        this.weight = 0;
+    }
 
-	public NodeData(int key) {
-		this();
-		this.key = key;
-	}
+    public NodeData(int key) {
+        this();
+        this.key = key;
+    }
 
-	public NodeData(int key, double x,double y,double z) {
-		this();
-		this.pos = new GeoLocation(x, y, z);
-		this.key = key;
-	}
-	//------------
+    public NodeData(int key, double x, double y, double z) {
+        this();
+        this.key = key;
+        this.pos = new GeoLocation(x, y, z);
+    }
 
-	/**
-	 * Returns the key (id) associated with this node.
-	 * @return int
-	 */
-	@Override
-	public int getKey() {
-		return this.key;
-	}
+    public NodeData(int key, geo_location pos) {
+        this();
+        this.key = key;
+        this.pos = new GeoLocation(pos.x(), pos.y(), pos.z());
+    }
 
-	/** Returns the location of this node, if
-	 * none return null.
-	 *
-	 * @return geo_location
-	 */
-	@Override
-	public geo_location getLocation() {
-		return this.pos;
-	}
+    // Interface implementation
+    @Override
+    public int getKey() {
+        return this.key;
+    }
 
-	/** Allows changing this node's location.
-	 * @param p - new new location  (position) of this node.
-	 */
-	@Override
-	public void setLocation(geo_location p) {
-		this.pos = new GeoLocation(p.x(), p.y(), p.z());
-	}
+    @Override
+    public geo_location getLocation() {
+        return this.pos;
+    }
 
-	/**
-	 * Returns the weight associated with this node.
-	 * @return double
-	 */
-	@Override
-	public double getWeight() {
-		return 0;
-	}
+    @Override
+    public void setLocation(geo_location p) {
+        if (p != null) {
+            this.pos = new GeoLocation(p.x(), p.y(), p.z());
+        } else {
+            this.pos = null;
+        }
+    }
 
-	/**
-	 * Allows changing this node's weight.
-	 * @param w - the new weight
-	 */
-	@Override
-	public void setWeight(double w) {}
+    @Override
+    public double getWeight() {
+        return this.weight;
+    }
 
-	/**
-	 * Returns the remark (meta data) associated with this node.
-	 * @return
-	 */
-	@Override
-	public String getInfo() {
-		return "info: " + this.info;
-	}
+    @Override
+    public void setWeight(double w) {
+        this.weight = w;
+    }
 
-	/**
-	 * Allows changing the remark (meta data) associated with this node.
-	 * @param s
-	 */
-	@Override
-	public void setInfo(String s) {
-		this.info = s;
-	}
+    @Override
+    public String getInfo() {
+        return this.info;
+    }
 
-	/**
-	 * Temporal data (aka color: e,g, white, gray, black)
-	 * which can be used be algorithms
-	 * @return int
-	 */
-	@Override
-	public int getTag() {
-		return this.tag;
-	}
+    @Override
+    public void setInfo(String s) {
+        this.info = s;
+    }
 
-	/**
-	 * Allows setting the "tag" value for temporal marking an node - common
-	 * practice for marking by algorithms.
-	 * @param t - the new value of the tag
-	 */
-	@Override
-	public void setTag(int t) {
+    @Override
+    public int getTag() {
+        return this.tag;
+    }
 
-	}
+    @Override
+    public void setTag(int t) {
+        this.tag = t;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("%d", this.getKey());
-	}
+    @Override
+    public String toString() {
+        return String.format("Node[%d]", this.getKey());
+    }
 
-	/**
-	 * Equality of addresses of gameClient.NodeData objects
-	 * @param o
-	 * @return boolean
-	 */
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (o == this)
-			return true;
-		if (!(o instanceof NodeData))
-			return false;
-		NodeData other = (NodeData) o;
-		return this.key == other.key && this.info.equals(other.info) && this.tag == other.tag;
-	}
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || !(o instanceof NodeData)) return false;
+        if (o == this) return true;
+        NodeData other = (NodeData) o;
+        return this.key == other.key &&
+               ((this.info == null && other.info == null) || (this.info != null && this.info.equals(other.info))) &&
+               this.tag == other.tag;
+    }
 
-	/**
-	 * Prevents collisions on the hashmap of outer class gameClient.DWGraph_DS
-	 * @return int
-	 */
-	@Override
-	public int hashCode() {
-		int hash = 7;
-		hash = 31 * hash + this.key;
-		hash = 31 * hash + this.info.hashCode();
-		hash = 31 * hash + Double.hashCode(this.tag);
-		return hash;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + this.key;
+        hash = 31 * hash + (this.info == null ? 0 : this.info.hashCode());
+        hash = 31 * hash + this.tag;
+        return hash;
+    }
 }
